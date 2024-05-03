@@ -11,6 +11,7 @@ import '../src/assets/styles/index.css';
 import App from './App';
 import './assets/styles/bootstrap.custom.css';
 import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
 
 /**
  * The router object for handling navigation and rendering of routes.
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index={true} path='/' element={<HomeScreen />} />
+      <Route path='/product/:id' element={<ProductScreen />} />
     </Route>
   )
 );
