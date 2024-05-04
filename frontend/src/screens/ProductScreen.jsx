@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Fragment, useEffect, useState } from 'react';
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import Rating from '../components/Rating';
+import Rating from '../components/Rating.jsx';
 
 const ProductScreen = () => {
   const [product, setProduct] = useState([]);
