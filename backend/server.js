@@ -1,12 +1,9 @@
-/**
- * Express server module.
- * @module server
- */
-
 import dotenv from 'dotenv';
 import express from 'express';
 import connectDB from './config/db.js';
-import products from './data/products.js';
+import { errorHandler, notFound } from './middleware/errorMiddleware.js';
+import productRoutes from './routes/productRoutes.js';
+
 dotenv.config();
 
 const PORT = process.env.PORT || 3001;
@@ -18,53 +15,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/**
- * Route for the root endpoint.
- * @name GET /
- * @function
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {string} - The response message.
- */
-
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-/**
- * Route for getting all products.
- * @name GET /api/products
- * @function
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object[]} - The array of products.
- */
-
-app.get('/api/products', (req, res) => {
-  res.json(products);
-});
-
-/**
- * Route for getting a specific product by ID.
- * @name GET /api/products/:id
- * @function
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} - The product object.
- */
-
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.json(product);
-});
-
-/**
- * Starts the server and listens on the specified port.
- * @name listen
- * @function
- * @param {number} PORT - The port number to listen on.
- * @param {Function} callback - The callback function to execute when the server starts.
- */
+app.use('/api/products', productRoutes);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
